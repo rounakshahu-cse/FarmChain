@@ -29,3 +29,12 @@ dist-ssr/
 # OS files
 Thumbs.db
 .DS_Store
+
+
+node_modules/
+.env
+.env.local
+__pycache__/
+*.pyc
+.venv/
+dist/
