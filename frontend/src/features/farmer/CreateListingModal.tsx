@@ -78,25 +78,25 @@ export const CreateListingModal: React.FC<CreateListingModalProps> = ({
       : '0';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-      <div className="w-full max-w-xl rounded-3xl bg-slate-900 border border-slate-700/80 shadow-2xl p-6 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+      <div className="w-full max-w-xl rounded-3xl bg-white border border-[#557373]/20 shadow-2xl p-6 overflow-hidden animate-in fade-in zoom-in-95 duration-200 text-[#0d0d0d]">
+        <div className="flex items-center justify-between border-b border-[#557373]/15 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
-              <Sprout className="w-5 h-5 text-emerald-400" />
+            <div className="w-10 h-10 rounded-2xl bg-[#dfe5f3] border border-[#557373]/30 flex items-center justify-center">
+              <Sprout className="w-5 h-5 text-[#557373]" />
             </div>
             <div>
-              <h3 className="font-extrabold text-base text-white">
+              <h3 className="font-extrabold text-base text-[#0d0d0d]">
                 {t.farmer.createListing}
               </h3>
-              <p className="text-xs text-slate-400">
-                Direct-to-merchant bidding without middleman commission
+              <p className="text-xs text-[#64748b]">
+                {t.merchant.escrowGuaranteed}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800"
+            className="p-2 rounded-xl text-[#64748b] hover:text-[#0d0d0d] hover:bg-[#dfe5f3]/60 transition-all"
           >
             <X className="w-5 h-5" />
           </button>
@@ -105,13 +105,13 @@ export const CreateListingModal: React.FC<CreateListingModalProps> = ({
         <form onSubmit={handleSubmit} className="space-y-4 mt-4 text-xs">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="font-bold text-slate-300 block mb-1">
+              <label className="font-bold text-[#0d0d0d] block mb-1">
                 {t.farmer.cropName} *
               </label>
               <select
                 value={cropName}
                 onChange={(e) => setCropName(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-500 text-slate-100 font-medium"
+                className="w-full px-3 py-2 rounded-xl bg-[#f2efea]/70 border border-[#557373]/30 focus:border-[#557373] text-[#0d0d0d] font-medium"
               >
                 <option value="Soybean">Soybean (सोयाबीन)</option>
                 <option value="Wheat">Sharbati Wheat (गहू / गेहूं)</option>
@@ -125,7 +125,7 @@ export const CreateListingModal: React.FC<CreateListingModalProps> = ({
             </div>
 
             <div>
-              <label className="font-bold text-slate-300 block mb-1">
+              <label className="font-bold text-[#0d0d0d] block mb-1">
                 {t.farmer.variety}
               </label>
               <input
@@ -133,14 +133,14 @@ export const CreateListingModal: React.FC<CreateListingModalProps> = ({
                 value={variety}
                 onChange={(e) => setVariety(e.target.value)}
                 placeholder="e.g. JS-335, Pusa 1121"
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-500 text-slate-100"
+                className="w-full px-3 py-2 rounded-xl bg-[#f2efea]/70 border border-[#557373]/30 focus:border-[#557373] text-[#0d0d0d]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="font-bold text-slate-300 block mb-1">
+              <label className="font-bold text-[#0d0d0d] block mb-1">
                 {t.farmer.quantity} *
               </label>
               <input
@@ -148,18 +148,18 @@ export const CreateListingModal: React.FC<CreateListingModalProps> = ({
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
                 min="1"
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-500 text-slate-100"
+                className="w-full px-3 py-2 rounded-xl bg-[#f2efea]/70 border border-[#557373]/30 focus:border-[#557373] text-[#0d0d0d]"
               />
             </div>
 
             <div>
-              <label className="font-bold text-slate-300 block mb-1">
+              <label className="font-bold text-[#0d0d0d] block mb-1">
                 {t.farmer.qualityGrade} *
               </label>
               <select
                 value={qualityGrade}
                 onChange={(e) => setQualityGrade(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-500 text-slate-100 font-medium"
+                className="w-full px-3 py-2 rounded-xl bg-[#f2efea]/70 border border-[#557373]/30 focus:border-[#557373] text-[#0d0d0d] font-medium"
               >
                 <option value="Grade A - Premium">Grade A - Premium (Top Quality)</option>
                 <option value="Grade B - Standard">Grade B - Standard (Market Grade)</option>
@@ -169,92 +169,92 @@ export const CreateListingModal: React.FC<CreateListingModalProps> = ({
           </div>
 
           {/* Pricing & Profit Baseline */}
-          <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3">
+          <div className="p-3.5 rounded-2xl bg-[#dfe5f3]/40 border border-[#557373]/20 space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="font-bold text-emerald-400 block mb-1">
+                <label className="font-bold text-[#557373] block mb-1">
                   {t.farmer.basePrice} *
                 </label>
                 <input
                   type="number"
                   value={basePrice}
                   onChange={(e) => setBasePrice(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-emerald-500/40 text-emerald-300 font-bold"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-[#557373]/40 text-[#0d0d0d] font-bold"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-amber-400 block mb-1">
+                <label className="font-bold text-[#272401] block mb-1">
                   {t.farmer.costOfProduction} *
                 </label>
                 <input
                   type="number"
                   value={costOfProduction}
                   onChange={(e) => setCostOfProduction(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-amber-500/40 text-amber-300 font-bold"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-[#272401]/30 text-[#0d0d0d] font-bold"
                 />
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-[11px] pt-1 text-slate-400 border-t border-slate-800">
-              <span>Expected Base Profit Margin:</span>
-              <span className="font-bold text-emerald-400">
-                +{estimatedProfitMargin}% Margin (₹
+            <div className="flex items-center justify-between text-[11px] pt-1 text-[#64748b] border-t border-[#557373]/15">
+              <span>{t.farmer.profitMargin}:</span>
+              <span className="font-bold text-[#557373]">
+                +{estimatedProfitMargin}% ({t.common.amount}: ₹
                 {((basePrice - costOfProduction) * quantity).toLocaleString('en-IN')}{' '}
-                est. profit)
+                est. {t.common.price})
               </span>
             </div>
           </div>
 
           <div>
-            <label className="font-bold text-slate-300 block mb-1">
+            <label className="font-bold text-[#0d0d0d] block mb-1">
               {t.farmer.farmLocation}
             </label>
             <input
               type="text"
               value={farmLocation}
               onChange={(e) => setFarmLocation(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-100"
+              className="w-full px-3 py-2 rounded-xl bg-[#f2efea]/70 border border-[#557373]/30 text-[#0d0d0d]"
             />
           </div>
 
           {/* Next-Day Scheduled Bidding Option */}
-          <div className="p-3 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 flex items-start gap-3">
+          <div className="p-3 rounded-2xl bg-[#dfe5f3]/60 border border-[#557373]/30 flex items-start gap-3">
             <input
               type="checkbox"
               id="schedule"
               checked={scheduleTomorrow}
               onChange={(e) => setScheduleTomorrow(e.target.checked)}
-              className="mt-1 w-4 h-4 rounded text-emerald-500 accent-emerald-500"
+              className="mt-1 w-4 h-4 rounded accent-[#557373]"
             />
             <label htmlFor="schedule" className="cursor-pointer">
-              <span className="font-bold text-emerald-300 block">
+              <span className="font-bold text-[#557373] block">
                 {t.farmer.scheduleTomorrow} (Recommended)
               </span>
-              <span className="text-[11px] text-slate-400 block mt-0.5">
+              <span className="text-[11px] text-[#64748b] block mt-0.5">
                 {t.farmer.scheduleTomorrowDesc}
               </span>
             </label>
           </div>
 
           {/* Submit */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#557373]/15">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl font-semibold text-slate-400 hover:bg-slate-800"
+              className="px-4 py-2 rounded-xl font-semibold text-[#64748b] hover:bg-[#dfe5f3]/50 transition-colors"
             >
-              Cancel
+              {t.common.cancel}
             </button>
             <button
               type="submit"
               disabled={isLoading}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold shadow-lg shadow-emerald-950/60 disabled:opacity-50 transition-all"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#557373] hover:bg-[#435c5c] text-white font-extrabold shadow-md shadow-[#557373]/25 disabled:opacity-50 transition-all"
             >
               {isLoading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Publishing...</span>
+                  <span>{t.common.loading}</span>
                 </>
               ) : (
                 <>

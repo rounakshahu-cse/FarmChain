@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from backend.app.core.database import get_db
-from backend.app.api.v1.auth import get_current_user
+from backend.app.api.v1.auth import get_current_user, require_roles
 from backend.app.models.user import User
 from backend.app.models.pesticide import PesticideProduct, PesticideOrder
 from backend.app.models.notification import Notification
@@ -65,7 +65,7 @@ def get_pesticide_by_id(product_id: int, db: Session = Depends(get_db)):
 @router.post("/", response_model=PesticideProductOut)
 def create_pesticide_product(
     product_in: PesticideProductCreate,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_roles("seller")),
     db: Session = Depends(get_db)
 ):
     new_product = PesticideProduct(
@@ -92,7 +92,7 @@ def create_pesticide_product(
 @router.post("/order", response_model=PesticideOrderOut)
 def order_pesticide(
     order_in: PesticideOrderCreate,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_roles("farmer")),
     db: Session = Depends(get_db)
 ):
     product = db.query(PesticideProduct).filter(PesticideProduct.id == order_in.product_id).first()

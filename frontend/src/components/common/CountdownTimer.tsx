@@ -41,7 +41,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({
 
   if (timeLeft.isExpired) {
     return (
-      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/80 border border-slate-700 text-slate-400 text-xs font-medium">
+      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-500 text-xs font-medium">
         <Clock className="w-3.5 h-3.5" />
         <span>Window Closed</span>
       </div>
@@ -54,14 +54,14 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({
     <div
       className={`inline-flex items-center gap-2 px-3 py-1 rounded-lg border backdrop-blur-md text-xs font-mono font-semibold ${
         isScheduled
-          ? 'bg-amber-950/70 border-amber-500/40 text-amber-300'
-          : 'bg-rose-950/70 border-rose-500/40 text-rose-300 animate-pulse-slow'
+          ? 'bg-[#dfe5f3] border-[#557373]/30 text-[#272401]'
+          : 'bg-rose-50 border-rose-200 text-rose-700 animate-pulse-slow'
       }`}
     >
       {isScheduled ? (
-        <CalendarClock className="w-3.5 h-3.5 text-amber-400" />
+        <CalendarClock className="w-3.5 h-3.5 text-[#557373]" />
       ) : (
-        <Flame className="w-3.5 h-3.5 text-rose-400" />
+        <Flame className="w-3.5 h-3.5 text-rose-600" />
       )}
       <span className="text-[11px] uppercase tracking-wider font-sans opacity-80">
         {isScheduled ? 'Bidding Opens In:' : 'Closes In:'}

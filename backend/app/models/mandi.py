@@ -15,6 +15,9 @@ class MandiPrice(Base):
     min_price = Column(Float, nullable=False)
     max_price = Column(Float, nullable=False)
     distance_km = Column(Float, default=25.0)  # Distance from reference farming hub
+    arrivals_tonnes = Column(Float, default=150.0)  # Daily wholesale mandi arrivals in metric tonnes
     price_trend = Column(String(20), default="up")  # up, down, stable
     trend_pct = Column(Float, default=2.5)
+    market_status = Column(String(50), default="Open & Trading")
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+

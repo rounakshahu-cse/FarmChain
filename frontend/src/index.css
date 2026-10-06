@@ -1,77 +1,55 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light;
+
   --font-heading: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
-}
 
-/* ==========================================================================
-   🌿 DEFAULT THEME: Pristine Modern (Clean White, Deep Slate & Emerald Accents)
-   ========================================================================== */
-:root, .theme-pristine-light {
-  --bg-main: #f8fafc;
-  --bg-gradient: radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
-                 radial-gradient(circle at 90% 90%, rgba(37, 99, 235, 0.06) 0%, transparent 40%),
-                 linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  /* ==========================================================================
+     🌿 Calm Luxury Color Palette:
+     - #DFE5F3 : Soft Mist / Light Lavender-Slate
+     - #557373 : Sage / Slate Pine Teal-Green
+     - #272401 : Deep Olive Umber / Bronze Accent
+     - #F2EFEA : Warm Linen / Cream Canvas
+     - #0D0D0D : Rich Charcoal / Jet Black Typography
+     ========================================================================== */
+  --color-mist: #dfe5f3;
+  --color-sage: #557373;
+  --color-olive: #272401;
+  --color-linen: #f2efea;
+  --color-charcoal: #0d0d0d;
+
+  /* Core Canvas & Backgrounds */
+  --bg-main: #f2efea;
+  --bg-gradient: radial-gradient(circle at 12% 15%, rgba(85, 115, 115, 0.12) 0%, transparent 45%),
+                 radial-gradient(circle at 88% 85%, rgba(223, 229, 243, 0.75) 0%, transparent 45%),
+                 linear-gradient(180deg, #f2efea 0%, #ffffff 50%, #dfe5f3 100%);
   --bg-card: #ffffff;
   --bg-card-hover: #ffffff;
-  --border-subtle: #e2e8f0;
-  --border-strong: #cbd5e1;
-  --text-main: #0f172a;
-  --text-muted: #059669;
-  --text-dim: #64748b;
-  --accent-primary: #059669;
-  --accent-secondary: #2563eb;
-  --accent-glow: 0 10px 25px -5px rgba(16, 185, 129, 0.25);
-  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 10px 25px -5px rgba(0, 0, 0, 0.04);
-  --shadow-card-hover: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 0 0 1px #10b981;
-}
+  --bg-card-subtle: #dfe5f3;
+  --border-subtle: rgba(85, 115, 115, 0.18);
+  --border-strong: #557373;
 
-/* ==========================================================================
-   🌑 THEME 2: Obsidian Luxe (Deep Charcoal/Navy & Neon Emerald)
-   ========================================================================== */
-.theme-obsidian-dark {
-  --bg-main: #0b0f19;
-  --bg-gradient: radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12) 0%, transparent 45%),
-                 radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.10) 0%, transparent 45%),
-                 linear-gradient(180deg, #0b0f19 0%, #030712 100%);
-  --bg-card: rgba(17, 24, 39, 0.85);
-  --bg-card-hover: rgba(31, 41, 55, 0.95);
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(16, 185, 129, 0.40);
-  --text-main: #f8fafc;
-  --text-muted: #34d399;
-  --text-dim: #94a3b8;
-  --accent-primary: #10b981;
-  --accent-secondary: #3b82f6;
-  --accent-glow: 0 0 30px rgba(16, 185, 129, 0.35);
-  --shadow-card: 0 10px 30px 0 rgba(0, 0, 0, 0.35);
-  --shadow-card-hover: 0 16px 40px 0 rgba(0, 0, 0, 0.5), 0 0 25px rgba(16, 185, 129, 0.3);
-}
-
-/* ==========================================================================
-   🌊 THEME 3: Royal Sapphire (Modern Blue & Crisp White)
-   ========================================================================== */
-.theme-sapphire-light {
-  --bg-main: #f0f7ff;
-  --bg-gradient: radial-gradient(circle at 15% 15%, rgba(37, 99, 235, 0.12) 0%, transparent 45%),
-                 radial-gradient(circle at 85% 85%, rgba(14, 165, 233, 0.10) 0%, transparent 45%),
-                 linear-gradient(180deg, #f0f7ff 0%, #ffffff 60%, #f8fafc 100%);
-  --bg-card: #ffffff;
-  --bg-card-hover: #ffffff;
-  --border-subtle: #dbeafe;
-  --border-strong: #93c5fd;
-  --text-main: #0f172a;
-  --text-muted: #2563eb;
+  /* Typography */
+  --text-main: #0d0d0d;
+  --text-muted: #557373;
   --text-dim: #64748b;
-  --accent-primary: #2563eb;
-  --accent-secondary: #0ea5e9;
-  --accent-glow: 0 10px 25px -5px rgba(37, 99, 235, 0.25);
-  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 10px 25px -5px rgba(37, 99, 235, 0.05);
-  --shadow-card-hover: 0 10px 30px -5px rgba(37, 99, 235, 0.15), 0 0 0 1px #2563eb;
+
+  /* Accents */
+  --accent-primary: #557373;
+  --accent-secondary: #272401;
+  --accent-mist: #dfe5f3;
+  --accent-glow: 0 8px 24px -4px rgba(85, 115, 115, 0.25);
+  --shadow-card: 0 2px 10px -2px rgba(13, 13, 13, 0.05), 0 1px 3px 0 rgba(13, 13, 13, 0.03);
+  --shadow-card-hover: 0 12px 30px -4px rgba(85, 115, 115, 0.18), 0 0 0 1px #557373;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background: var(--bg-gradient);
     background-attachment: fixed;
@@ -85,6 +63,19 @@
     font-family: var(--font-heading);
     color: var(--text-main);
     letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  /* Visible, consistent keyboard focus (replaces reliance on outline-none) */
+  :focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Numeric columns (prices, quantities) align cleanly */
+  .nums {
+    font-variant-numeric: tabular-nums;
   }
 }
 
@@ -95,7 +86,10 @@
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-card);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card-hover:hover {
@@ -106,39 +100,35 @@
 }
 
 .glass-panel {
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px -2px rgba(13, 13, 13, 0.05);
 }
 
 .glass-pill {
-  background: rgba(0, 0, 0, 0.03);
+  background: var(--color-mist);
+  color: var(--color-charcoal);
   backdrop-filter: blur(8px);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(85, 115, 115, 0.22);
 }
 
-.theme-obsidian-dark .glass-pill {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Gradient Text */
+/* Gradient Text - Calm Luxury Tones */
 .text-gradient-agro {
-  background: linear-gradient(135deg, #059669 0%, #10b981 50%, #2563eb 100%);
+  background: linear-gradient(135deg, #0d0d0d 0%, #557373 60%, #272401 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-gold {
-  background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #ea580c 100%);
+  background: linear-gradient(135deg, #272401 0%, #557373 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-blue {
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #0284c7 100%);
+  background: linear-gradient(135deg, #557373 0%, #272401 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -146,10 +136,10 @@
 /* Animations */
 @keyframes agroPulse {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+    box-shadow: 0 0 15px rgba(85, 115, 115, 0.22);
   }
   50% {
-    box-shadow: 0 0 30px rgba(16, 185, 129, 0.55);
+    box-shadow: 0 0 30px rgba(85, 115, 115, 0.45);
   }
 }
 
@@ -166,6 +156,22 @@
   animation: float 4s ease-in-out infinite;
 }
 
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .animate-float,
+  .glow-agro {
+    animation: none !important;
+  }
+}
+
 /* Custom Clean Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -177,10 +183,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.4);
+  background: rgba(85, 115, 115, 0.3);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.7);
+  background: rgba(85, 115, 115, 0.6);
 }

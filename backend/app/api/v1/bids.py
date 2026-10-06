@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from datetime import datetime, timezone
 from backend.app.core.database import get_db
-from backend.app.api.v1.auth import get_current_user
+from backend.app.api.v1.auth import get_current_user, require_roles
 from backend.app.models.user import User
 from backend.app.models.listing import CropListing
 from backend.app.models.bid import Bid
@@ -20,12 +20,18 @@ router = APIRouter()
 async def place_bid(
     listing_id: int,
     bid_in: BidCreate,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_roles("merchant")),
     db: Session = Depends(get_db)
 ):
     listing = db.query(CropListing).filter(CropListing.id == listing_id).first()
     if not listing:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Crop listing not found")
+
+    if listing.farmer_id == current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You cannot bid on your own listing",
+        )
 
     if listing.status != "bidding_open":
         raise HTTPException(
@@ -42,6 +48,12 @@ async def place_bid(
     # Check highest existing bid
     existing_bids = db.query(Bid).filter(Bid.listing_id == listing_id).order_by(Bid.amount_per_quintal.desc()).all()
     previous_highest = existing_bids[0] if existing_bids else None
+
+    if previous_highest and bid_in.amount_per_quintal <= previous_highest.amount_per_quintal:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Bid must exceed the current highest bid of ₹{previous_highest.amount_per_quintal}/Qtl"
+        )
 
     total_amount = round(bid_in.amount_per_quintal * listing.quantity_quintals, 2)
 
@@ -121,6 +133,12 @@ async def accept_bid(
     bid = db.query(Bid).filter(Bid.id == payload.bid_id).first()
     if not bid:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Bid not found")
+
+    if bid.status != "active":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only active bids can be accepted",
+        )
 
     listing = db.query(CropListing).filter(CropListing.id == bid.listing_id).first()
     if not listing:

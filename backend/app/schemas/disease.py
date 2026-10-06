@@ -1,16 +1,26 @@
 from pydantic import BaseModel, ConfigDict
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 class DiseaseDetectResponse(BaseModel):
     id: Optional[int] = None
+    is_valid_plant: Optional[bool] = True
     crop_name: str
+    botanical_name: Optional[str] = None
+    crop_confidence: Optional[float] = 98.5
     detected_disease: str
+    pathogen_type: Optional[str] = None
+    causal_organism: Optional[str] = None
     confidence: float
     severity: str
+    infection_stage: Optional[str] = None
+    yield_risk: Optional[str] = None
     symptoms: str
+    diagnostic_markers: Optional[List[str]] = None
     organic_remedy: str
     chemical_treatment: str
+    spray_dosage: Optional[str] = None
+    preventive_measures: Optional[str] = None
     recommended_product_id: Optional[int] = None
     recommended_product_name: Optional[str] = None
     recommended_product_price: Optional[float] = None

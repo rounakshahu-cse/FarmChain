@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional
 from datetime import datetime
 
@@ -12,7 +12,7 @@ class UserBase(BaseModel):
     state: str
 
 class UserCreate(UserBase):
-    password: str
+    password: str = Field(min_length=6, description="Minimum 6 characters")
 
 class UserLogin(BaseModel):
     phone_or_email: str

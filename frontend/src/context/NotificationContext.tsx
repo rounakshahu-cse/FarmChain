@@ -29,6 +29,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const { user } = useAuth();
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [latestToast, setLatestToast] = useState<NotificationItem | null>(null);
+  const token = localStorage.getItem('krishi_auth_token');
 
   const fetchNotifications = async () => {
     if (!user) return;
@@ -50,7 +51,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
       // WebSocket live subscriber
       let ws: WebSocket | null = null;
       try {
-        ws = new WebSocket(`${WS_BASE_URL}/ws/notifications/${user.id}`);
+        ws = new WebSocket(`${WS_BASE_URL}/ws/notifications/${user.id}?token=${encodeURIComponent(token || '')}`);
         ws.onmessage = (event) => {
           try {
             const data = JSON.parse(event.data);

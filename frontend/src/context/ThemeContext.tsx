@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type AppTheme = 'pristine-light' | 'obsidian-dark' | 'sapphire-light';
+export type AppTheme = 'light';
 
 interface ThemeContextType {
   theme: AppTheme;
@@ -11,29 +11,24 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<AppTheme>(() => {
-    return (localStorage.getItem('krishi_app_theme') as AppTheme) || 'pristine-light';
-  });
+  const [theme, setThemeState] = useState<AppTheme>('light');
 
   const setTheme = (newTheme: AppTheme) => {
-    setThemeState(newTheme);
-    localStorage.setItem('krishi_app_theme', newTheme);
+    setThemeState('light');
+    localStorage.setItem('krishi_app_theme', 'light');
   };
 
-  const themeList: AppTheme[] = ['pristine-light', 'obsidian-dark', 'sapphire-light'];
-
   const toggleTheme = () => {
-    const currentIndex = themeList.indexOf(theme);
-    const nextIndex = (currentIndex + 1) % themeList.length;
-    setTheme(themeList[nextIndex]);
+    setThemeState('light');
   };
 
   useEffect(() => {
     const root = document.documentElement;
-    themeList.forEach((t) => root.classList.remove(`theme-${t}`));
-    root.classList.add(`theme-${theme}`);
-    localStorage.setItem('krishi_app_theme', theme);
-  }, [theme]);
+    // Clear any obsolete dark/sapphire theme classes from previous sessions
+    root.classList.remove('theme-obsidian-dark', 'theme-sapphire-light', 'theme-pristine-light');
+    root.classList.add('theme-light');
+    localStorage.setItem('krishi_app_theme', 'light');
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
@@ -49,3 +44,4 @@ export const useTheme = () => {
   }
   return context;
 };
+

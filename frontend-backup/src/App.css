@@ -1,0 +1,193 @@
+/* ==========================================================================
+   FarmChain - Calm Luxury Master Light Theme & Component Styles
+   Palette:
+   - #DFE5F3 : Soft Mist
+   - #557373 : Sage / Slate Pine
+   - #272401 : Deep Olive Umber
+   - #F2EFEA : Warm Linen
+   - #0D0D0D : Rich Charcoal
+   ========================================================================== */
+
+:root {
+  /* Canvas Backgrounds */
+  --theme-bg-base: #f2efea;
+  --theme-bg-canvas: #f2efea;
+  --theme-bg-light-blue: #dfe5f3;
+  --theme-bg-gradient: radial-gradient(circle at 10% 10%, rgba(85, 115, 115, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 90% 90%, rgba(223, 229, 243, 0.75) 0%, transparent 45%),
+    linear-gradient(180deg, #f2efea 0%, #ffffff 50%, #dfe5f3 100%);
+
+  /* Calm Luxury Palette Tokens */
+  --color-mist: #dfe5f3;
+  --color-sage: #557373;
+  --color-olive: #272401;
+  --color-linen: #f2efea;
+  --color-charcoal: #0d0d0d;
+
+  /* Typography Colors */
+  --text-heading: #0d0d0d;
+  --text-body: #0d0d0d;
+  --text-subtle: #557373;
+  --text-muted: #64748b;
+  --text-blue-accent: #557373;
+
+  /* Card Surfaces & Borders */
+  --card-surface: rgba(255, 255, 255, 0.94);
+  --card-surface-hover: #ffffff;
+  --card-border: rgba(85, 115, 115, 0.18);
+  --card-border-hover: #557373;
+  --card-shadow: 0 4px 20px -2px rgba(13, 13, 13, 0.05);
+  --card-shadow-hover: 0 12px 30px -4px rgba(85, 115, 115, 0.18);
+}
+
+/* Base Body Background */
+body {
+  background: var(--theme-bg-gradient) !important;
+  color: var(--text-body);
+  min-height: 100vh;
+}
+
+/* High-Contrast Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-heading);
+}
+
+/* Calm Luxury Glassmorphic Cards */
+.theme-card-white-blue {
+  background: var(--card-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 1.5rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-card-white-blue:hover {
+  background: var(--card-surface-hover);
+  border-color: var(--card-border-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Primary Sage Buttons */
+.btn-royal-blue,
+.btn-primary-sage {
+  background: linear-gradient(135deg, #557373 0%, #435c5c 100%);
+  color: #ffffff;
+  font-weight: 800;
+  border-radius: 1rem;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 6px 18px rgba(85, 115, 115, 0.3);
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-royal-blue:hover,
+.btn-primary-sage:hover {
+  background: linear-gradient(135deg, #648888 0%, #557373 100%);
+  box-shadow: 0 10px 25px rgba(85, 115, 115, 0.45);
+  transform: scale(1.02);
+}
+
+.btn-royal-blue:active,
+.btn-primary-sage:active {
+  transform: scale(0.98);
+}
+
+/* Olive Dark Accent Button */
+.btn-olive {
+  background: #272401;
+  color: #ffffff;
+  font-weight: 800;
+  border-radius: 1rem;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 6px 18px rgba(39, 36, 1, 0.25);
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-olive:hover {
+  background: #3d3902;
+  box-shadow: 0 10px 25px rgba(39, 36, 1, 0.4);
+  transform: scale(1.02);
+}
+
+/* Mist Button with Sage Border */
+.btn-white-blue {
+  background: #ffffff;
+  color: #557373;
+  border: 1.5px solid rgba(85, 115, 115, 0.3);
+  font-weight: 700;
+  border-radius: 1rem;
+  padding: 0.65rem 1.25rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-white-blue:hover {
+  background: #dfe5f3;
+  border-color: #557373;
+  color: #0d0d0d;
+}
+
+/* Badge Pills */
+.pill-blue {
+  background: #dfe5f3;
+  color: #557373;
+  border: 1px solid rgba(85, 115, 115, 0.25);
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pill-profit {
+  background: rgba(85, 115, 115, 0.15);
+  color: #557373;
+  border: 1px solid rgba(85, 115, 115, 0.35);
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Typography Gradient */
+.text-gradient-royal-blue {
+  background: linear-gradient(135deg, #0d0d0d 0%, #557373 50%, #272401 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Input Fields */
+.input-white-blue {
+  background: #ffffff;
+  border: 1.5px solid rgba(85, 115, 115, 0.25);
+  color: #0d0d0d;
+  border-radius: 1rem;
+  padding: 0.65rem 1rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.input-white-blue:focus {
+  outline: none;
+  border-color: #557373;
+  box-shadow: 0 0 0 4px rgba(85, 115, 115, 0.15);
+}

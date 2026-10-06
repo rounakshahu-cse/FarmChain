@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from typing import Dict, Any, List
 from backend.app.core.database import get_db
-from backend.app.api.v1.auth import get_current_user
+from backend.app.api.v1.auth import get_current_user, require_roles
 from backend.app.models.user import User
 from backend.app.models.listing import CropListing
 from backend.app.models.bid import Bid
@@ -13,9 +14,11 @@ from backend.app.models.disease import DiseaseReport
 
 router = APIRouter()
 
+admin_only = require_roles("admin")
+
 @router.get("/stats")
 def get_admin_dashboard_stats(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(admin_only),
     db: Session = Depends(get_db)
 ) -> Dict[str, Any]:
     total_farmers = db.query(User).filter(User.role == "farmer").count()
@@ -27,9 +30,12 @@ def get_admin_dashboard_stats(
     active_bidding_listings = db.query(CropListing).filter(CropListing.status == "bidding_open").count()
     total_bids = db.query(Bid).count()
 
-    orders = db.query(Order).all()
-    total_gmv = sum(o.total_amount for o in orders)
-    total_delivered_orders = sum(1 for o in orders if o.status in ["delivered", "completed", "in_transit"])
+    # Aggregated queries instead of loading every order into memory
+    total_orders = db.query(Order).count()
+    total_gmv = db.query(func.coalesce(func.sum(Order.total_amount), 0.0)).scalar() or 0.0
+    total_delivered_orders = db.query(Order).filter(
+        Order.status.in_(["delivered", "completed", "in_transit"])
+    ).count()
 
     total_transport_trips = db.query(TransportJob).count()
     total_disease_diagnoses = db.query(DiseaseReport).count()
@@ -65,7 +71,7 @@ def get_admin_dashboard_stats(
         "total_listings": total_listings,
         "active_bidding_listings": active_bidding_listings,
         "total_bids": total_bids,
-        "total_orders": len(orders),
+        "total_orders": total_orders,
         "total_delivered_orders": total_delivered_orders,
         "total_transport_trips": total_transport_trips,
         "total_disease_diagnoses": total_disease_diagnoses,
@@ -76,7 +82,7 @@ def get_admin_dashboard_stats(
 @router.get("/users")
 def get_all_users(
     role: str = None,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(admin_only),
     db: Session = Depends(get_db)
 ):
     q = db.query(User)

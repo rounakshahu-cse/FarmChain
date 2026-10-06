@@ -13,8 +13,10 @@ class MandiPriceOut(BaseModel):
     min_price: float
     max_price: float
     distance_km: float
+    arrivals_tonnes: Optional[float] = 120.0
     price_trend: str
     trend_pct: float
+    market_status: Optional[str] = "Open & Trading"
     updated_at: datetime
     estimated_transport_cost: Optional[float] = None
     net_realized_price: Optional[float] = None

@@ -4,6 +4,8 @@ from contextlib import asynccontextmanager
 
 from backend.app.core.config import settings
 from backend.app.core.database import Base, engine, SessionLocal
+from backend.app.core.security import decode_access_token
+from backend.app.models.user import User
 from backend.app.services.seed_data import seed_database
 from backend.app.services.websocket_manager import ws_manager
 
@@ -40,7 +42,7 @@ app = FastAPI(
 # Enable CORS for React frontend (Vite dev server default 5173, 3000, etc.)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -59,9 +61,31 @@ app.include_router(chatbot_router, prefix=f"{settings.API_V1_STR}/chatbot", tags
 app.include_router(notifications_router, prefix=f"{settings.API_V1_STR}/notifications", tags=["Notifications"])
 app.include_router(admin_router, prefix=f"{settings.API_V1_STR}/admin", tags=["Admin"])
 
+def _ws_user_or_reject(websocket: WebSocket) -> int:
+    """Authenticate a WebSocket connection via ?token= query param.
+    Returns the authenticated user id, or -1 if unauthenticated."""
+    token = websocket.query_params.get("token", "")
+    payload = decode_access_token(token) if token else None
+    if not payload or "sub" not in payload:
+        return -1
+    try:
+        return int(payload["sub"])
+    except (TypeError, ValueError):
+        return -1
+
+def _ws_user_exists(user_id: int) -> bool:
+    db = SessionLocal()
+    try:
+        return db.query(User).filter(User.id == user_id).first() is not None
+    finally:
+        db.close()
+
 # Live WebSockets
 @app.websocket("/ws/bids/{listing_id}")
 async def websocket_bidding_room(websocket: WebSocket, listing_id: int):
+    if _ws_user_or_reject(websocket) < 0:
+        await websocket.close(code=4401, reason="Authentication required")
+        return
     await ws_manager.connect_listing(listing_id, websocket)
     try:
         while True:
@@ -72,6 +96,11 @@ async def websocket_bidding_room(websocket: WebSocket, listing_id: int):
 
 @app.websocket("/ws/notifications/{user_id}")
 async def websocket_notifications(websocket: WebSocket, user_id: int):
+    authed_user_id = _ws_user_or_reject(websocket)
+    # Users may only subscribe to their own notification stream
+    if authed_user_id != user_id or not _ws_user_exists(user_id):
+        await websocket.close(code=4403, reason="Forbidden")
+        return
     await ws_manager.connect_user(user_id, websocket)
     try:
         while True:

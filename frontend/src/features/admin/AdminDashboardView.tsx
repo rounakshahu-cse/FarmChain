@@ -40,9 +40,9 @@ export const AdminDashboardView: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="py-24 flex flex-col items-center justify-center text-slate-400 gap-3">
-        <Loader2 className="w-8 h-8 animate-spin text-rose-400" />
-        <span className="text-xs">Connecting to platform oversight node...</span>
+      <div className="py-24 flex flex-col items-center justify-center text-[#64748b] gap-3">
+        <Loader2 className="w-8 h-8 animate-spin text-rose-600" />
+        <span className="text-xs">{t.common.loading}</span>
       </div>
     );
   }
@@ -52,81 +52,81 @@ export const AdminDashboardView: React.FC = () => {
       {/* Header */}
       <div>
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center">
-            <ShieldAlert className="w-4 h-4 text-rose-400" />
+          <div className="w-8 h-8 rounded-xl bg-rose-100 border border-rose-200 flex items-center justify-center">
+            <ShieldAlert className="w-4 h-4 text-rose-700" />
           </div>
-          <h2 className="text-xl font-extrabold text-white">
+          <h2 className="text-xl font-extrabold text-[#0d0d0d]">
             {t.nav.adminPanel}
           </h2>
-          <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40">
+          <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 border border-rose-200">
             Super Ops
           </span>
         </div>
-        <p className="text-xs text-slate-400 mt-1">
-          National platform analytics, verified trust scores, dispute arbitration, and audit logs
+        <p className="text-xs text-[#64748b] mt-1">
+          {t.admin.subtitle}
         </p>
       </div>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="glass-card rounded-3xl p-5 border border-slate-800 space-y-1">
-          <span className="text-xs font-bold text-slate-400 block">
-            Platform GMV
+        <div className="glass-card rounded-3xl p-5 border border-[#557373]/20 space-y-1 bg-white">
+          <span className="text-xs font-bold text-[#64748b] block">
+            {t.admin.escrowVolume}
           </span>
-          <div className="text-2xl font-black text-emerald-400">
+          <div className="text-2xl font-black text-[#557373]">
             ₹{stats?.platform_gmv?.toLocaleString('en-IN') || '14,80,000'}
           </div>
-          <span className="text-[10px] text-emerald-400 font-medium">
+          <span className="text-[10px] text-[#557373] font-medium">
             0% Middleman leakage
           </span>
         </div>
 
-        <div className="glass-card rounded-3xl p-5 border border-slate-800 space-y-1">
-          <span className="text-xs font-bold text-slate-400 block">
-            Registered Farmers
+        <div className="glass-card rounded-3xl p-5 border border-[#557373]/20 space-y-1 bg-white">
+          <span className="text-xs font-bold text-[#64748b] block">
+            {t.roles.farmer}
           </span>
-          <div className="text-2xl font-black text-white">
+          <div className="text-2xl font-black text-[#0d0d0d]">
             {stats?.total_farmers || 3}
           </div>
-          <span className="text-[10px] text-slate-400">
+          <span className="text-[10px] text-[#64748b]">
             Across MH, Punjab, MP
           </span>
         </div>
 
-        <div className="glass-card rounded-3xl p-5 border border-slate-800 space-y-1">
-          <span className="text-xs font-bold text-slate-400 block">
-            Wholesale Merchants
+        <div className="glass-card rounded-3xl p-5 border border-[#557373]/20 space-y-1 bg-white">
+          <span className="text-xs font-bold text-[#64748b] block">
+            {t.roles.merchant}
           </span>
-          <div className="text-2xl font-black text-blue-400">
+          <div className="text-2xl font-black text-[#272401]">
             {stats?.total_merchants || 3}
           </div>
-          <span className="text-[10px] text-blue-400">
+          <span className="text-[10px] text-[#272401]">
             Verified APMC license holders
           </span>
         </div>
 
-        <div className="glass-card rounded-3xl p-5 border border-slate-800 space-y-1">
-          <span className="text-xs font-bold text-slate-400 block">
-            Avg Trust Score
+        <div className="glass-card rounded-3xl p-5 border border-[#557373]/20 space-y-1 bg-white">
+          <span className="text-xs font-bold text-[#64748b] block">
+            {t.nav.trustScore}
           </span>
-          <div className="text-2xl font-black text-amber-400">
+          <div className="text-2xl font-black text-[#272401]">
             {stats?.average_trust_score || 4.9} ★
           </div>
-          <span className="text-[10px] text-amber-400">
+          <span className="text-[10px] text-[#272401]">
             Composite rating algorithm
           </span>
         </div>
       </div>
 
       {/* Disputes & Arbitrations */}
-      <div className="glass-card rounded-3xl p-6 border border-slate-800 space-y-4">
+      <div className="glass-card rounded-3xl p-6 border border-[#557373]/20 space-y-4 bg-white">
         <div className="flex items-center justify-between">
-          <h3 className="font-extrabold text-base text-white flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-amber-400" />
-            Active Dispute Monitoring & Mediation
+          <h3 className="font-extrabold text-base text-[#0d0d0d] flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-[#272401]" />
+            {t.admin.disputeManagement}
           </h3>
-          <span className="text-xs text-slate-400">
-            Automated Escrow Governance
+          <span className="text-xs text-[#64748b]">
+            {t.payments.escrowAssurance}
           </span>
         </div>
 
@@ -134,33 +134,33 @@ export const AdminDashboardView: React.FC = () => {
           {stats?.disputes?.map((d: any) => (
             <div
               key={d.id}
-              className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+              className="p-4 rounded-2xl bg-[#f2efea]/70 border border-[#557373]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
             >
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-white text-sm">
+                  <span className="font-bold text-[#0d0d0d] text-sm">
                     {d.id} • {d.crop}
                   </span>
                   <span
                     className={`text-[9px] font-extrabold px-2 py-0.5 rounded-full ${
                       d.status.includes('Resolved')
-                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                        : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                        ? 'bg-[#dfe5f3] text-[#557373] border border-[#557373]/30'
+                        : 'bg-[#272401]/10 text-[#272401] border border-[#272401]/25'
                     }`}
                   >
                     {d.status}
                   </span>
                 </div>
-                <p className="text-slate-400 text-[11px] mt-1">
+                <p className="text-[#64748b] text-[11px] mt-1">
                   Parties: {d.farmer} ↔ {d.merchant || d.transporter} ({d.type})
                 </p>
               </div>
 
               <div className="text-right">
-                <span className="text-[10px] font-bold text-slate-400 block">
+                <span className="text-[10px] font-bold text-[#64748b] block">
                   Dispute Severity
                 </span>
-                <span className="font-black text-amber-400">{d.severity}</span>
+                <span className="font-black text-[#272401]">{d.severity}</span>
               </div>
             </div>
           ))}
@@ -168,39 +168,39 @@ export const AdminDashboardView: React.FC = () => {
       </div>
 
       {/* User Directory */}
-      <div className="glass-card rounded-3xl p-6 border border-slate-800 space-y-4">
-        <h3 className="font-extrabold text-base text-white flex items-center gap-2">
-          <Users className="w-4 h-4 text-emerald-400" />
-          Verified Platform Participants Directory
+      <div className="glass-card rounded-3xl p-6 border border-[#557373]/20 space-y-4 bg-white">
+        <h3 className="font-extrabold text-base text-[#0d0d0d] flex items-center gap-2">
+          <Users className="w-4 h-4 text-[#557373]" />
+          {t.admin.userRegistry}
         </h3>
 
         <div className="overflow-x-auto">
           <table className="w-full text-xs text-left">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 text-[10px] uppercase">
-                <th className="py-2.5 px-3">User Name</th>
-                <th className="py-2.5 px-3">Role</th>
-                <th className="py-2.5 px-3">Phone / Contact</th>
-                <th className="py-2.5 px-3">Location</th>
-                <th className="py-2.5 px-3 text-center">Trust Score</th>
-                <th className="py-2.5 px-3 text-center">Verification</th>
+              <tr className="border-b border-[#557373]/15 text-[#64748b] text-[10px] uppercase">
+                <th className="py-2.5 px-3">{t.gateway.enterAs}</th>
+                <th className="py-2.5 px-3">{t.common.status}</th>
+                <th className="py-2.5 px-3">{t.common.phone}</th>
+                <th className="py-2.5 px-3">{t.common.location}</th>
+                <th className="py-2.5 px-3 text-center">{t.nav.trustScore}</th>
+                <th className="py-2.5 px-3 text-center">{t.common.verified}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/50">
+            <tbody className="divide-y divide-[#557373]/10">
               {usersList.map((u) => (
-                <tr key={u.id} className="hover:bg-slate-900/40 text-slate-300">
-                  <td className="py-2.5 px-3 font-bold text-white">{u.name}</td>
-                  <td className="py-2.5 px-3 capitalize font-semibold text-slate-400">
+                <tr key={u.id} className="hover:bg-[#dfe5f3]/30 text-[#0d0d0d]">
+                  <td className="py-2.5 px-3 font-bold text-[#0d0d0d]">{u.name}</td>
+                  <td className="py-2.5 px-3 capitalize font-semibold text-[#64748b]">
                     {u.role}
                   </td>
                   <td className="py-2.5 px-3">{u.phone}</td>
                   <td className="py-2.5 px-3">{u.location}</td>
-                  <td className="py-2.5 px-3 text-center font-bold text-amber-400">
+                  <td className="py-2.5 px-3 text-center font-bold text-[#272401]">
                     {u.trust_score} ★
                   </td>
                   <td className="py-2.5 px-3 text-center">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                      Verified
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#dfe5f3] text-[#557373] border border-[#557373]/30">
+                      {t.common.verified}
                     </span>
                   </td>
                 </tr>

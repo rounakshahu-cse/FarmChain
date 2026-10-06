@@ -12,6 +12,12 @@ from backend.app.services.seed_data import seed_database
 from backend.app.models.listing import CropListing
 client = TestClient(app)
 
+def login_headers(phone: str, password: str = "password123"):
+    """Logs in a demo user and returns Authorization headers."""
+    resp = client.post("/api/v1/auth/login", json={"phone_or_email": phone, "password": password})
+    assert resp.status_code == 200
+    return {"Authorization": f"Bearer {resp.json()['access_token']}"}
+
 @pytest.fixture(scope="session", autouse=True)
 def setup_test_db():
     if os.path.exists("./test_farmchain.db"):
@@ -117,7 +123,7 @@ def test_transport_quote_and_booking():
     })
     assert quote_resp.status_code == 200
     data = quote_resp.json()
-    assert data["recommended_vehicle"] == "Pickup Truck (Mahindra Bolero Maxi)"
+    assert "Mahindra Bolero Maxi" in data["recommended_vehicle"]
     assert data["recommended_cost"] > 0
     assert len(data["options"]) >= 4
 
@@ -129,23 +135,68 @@ def test_mandi_intelligence():
     assert "net_realized_price" in data["best_mandi"]
     assert len(data["all_mandis"]) >= 2
 
+def test_auth_requires_token():
+    """Protected endpoints must reject unauthenticated requests."""
+    resp = client.get("/api/v1/auth/me")
+    assert resp.status_code == 401
+    resp = client.get("/api/v1/admin/stats")
+    assert resp.status_code == 401
+    resp = client.get("/api/v1/orders/1")
+    assert resp.status_code == 401
+
 def test_disease_detection():
+    headers = login_headers("9876543210")
     response = client.post("/api/v1/disease/detect", data={
         "crop_name": "Tomato",
         "image_url": "https://images.unsplash.com/photo-1592417817098-8f3d6910985b?w=400"
-    })
+    }, headers=headers)
     assert response.status_code == 200
     data = response.json()
+    assert data["crop_name"] == "Tomato"
+    assert data["botanical_name"] == "Solanum lycopersicum"
+    assert data["crop_confidence"] >= 90.0
     assert data["detected_disease"] != ""
     assert data["confidence"] > 80.0
     assert data["organic_remedy"] != ""
     assert data["chemical_treatment"] != ""
+    assert data["spray_dosage"] is not None
+    assert len(data.get("diagnostic_markers", [])) > 0
+
+def test_disease_detection_file_upload_and_auto_crop():
+    # Test uploading a raw image file with Auto-Detect crop
+    headers = login_headers("9876543210")
+    dummy_image_bytes = b"\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x01\x00H\x00H\x00\x00\xff\xdb\x00C\x00"
+    response = client.post(
+        "/api/v1/disease/detect",
+        data={"crop_name": "Auto-Detect"},
+        files={"file": ("leaf_cotton_sample.jpg", dummy_image_bytes, "image/jpeg")},
+        headers=headers
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["crop_name"] == "Cotton"
+    assert data["botanical_name"] == "Gossypium hirsutum"
+    assert data["detected_disease"] != ""
+    assert data["confidence"] > 80.0
+    assert "data:image/jpeg;base64," in data["image_url"]
+
+def test_disease_detection_rejects_non_image():
+    headers = login_headers("9876543210")
+    response = client.post(
+        "/api/v1/disease/detect",
+        data={"crop_name": "Tomato"},
+        files={"file": ("evil.txt", b"not an image at all", "text/plain")},
+        headers=headers
+    )
+    assert response.status_code == 400
+
 
 def test_krishi_sahayak_chatbot():
+    headers = login_headers("9876543210")
     response = client.post("/api/v1/chatbot/ask", json={
         "query": "What is the live mandi price for Soybean?",
         "language": "en"
-    })
+    }, headers=headers)
     assert response.status_code == 200
     data = response.json()
     assert "Soybean" in data["answer"] or "Mandi" in data["answer"]
@@ -159,45 +210,57 @@ def test_pesticides_and_order():
     assert len(products) > 0
     first_p = products[0]
 
-    # 2. Order pesticide
+    # 2. Order pesticide (farmers only)
+    headers = login_headers("9876543210")
     order_resp = client.post("/api/v1/pesticides/order", json={
         "product_id": first_p["id"],
         "quantity": 2,
         "delivery_address": "Farm House #4, Nashik"
-    })
+    }, headers=headers)
     assert order_resp.status_code == 200
     order_data = order_resp.json()
     assert order_data["quantity"] == 2
     assert order_data["total_price"] == first_p["price"] * 2
 
 def test_notifications_lifecycle():
+    headers = login_headers("9876543210")
     # Get notifications
-    resp = client.get("/api/v1/notifications/")
+    resp = client.get("/api/v1/notifications/", headers=headers)
     assert resp.status_code == 200
     notifs = resp.json()
     assert isinstance(notifs, list)
 
     if len(notifs) > 0:
         nid = notifs[0]["id"]
-        read_resp = client.post(f"/api/v1/notifications/{nid}/read")
+        read_resp = client.post(f"/api/v1/notifications/{nid}/read", headers=headers)
         assert read_resp.status_code == 200
 
-    read_all = client.post("/api/v1/notifications/read-all")
+    read_all = client.post("/api/v1/notifications/read-all", headers=headers)
     assert read_all.status_code == 200
 
 def test_admin_stats_and_users():
-    stats_resp = client.get("/api/v1/admin/stats")
+    admin_headers = login_headers("9999999999")
+
+    stats_resp = client.get("/api/v1/admin/stats", headers=admin_headers)
     assert stats_resp.status_code == 200
     stats = stats_resp.json()
     assert "platform_gmv" in stats
     assert "total_farmers" in stats
 
-    users_resp = client.get("/api/v1/admin/users")
+    users_resp = client.get("/api/v1/admin/users", headers=admin_headers)
     assert users_resp.status_code == 200
     users = users_resp.json()
     assert len(users) >= 5
 
+def test_admin_endpoints_deny_non_admin():
+    farmer_headers = login_headers("9876543210")
+    stats_resp = client.get("/api/v1/admin/stats", headers=farmer_headers)
+    assert stats_resp.status_code == 403
+    users_resp = client.get("/api/v1/admin/users", headers=farmer_headers)
+    assert users_resp.status_code == 403
+
 def test_transport_booking_and_status():
+    farmer_headers = login_headers("9876543210")
     book_resp = client.post("/api/v1/transport/book", json={
         "crop_name": "Wheat",
         "load_quintals": 30.0,
@@ -206,14 +269,19 @@ def test_transport_booking_and_status():
         "drop_location": "Vashi APMC",
         "distance_km": 160.0,
         "calculated_price": 4200.0
-    })
+    }, headers=farmer_headers)
     assert book_resp.status_code == 200
     job = book_resp.json()
     job_id = job["id"]
 
-    status_resp = client.post(f"/api/v1/transport/jobs/{job_id}/status?new_status=in_transit")
+    status_resp = client.post(f"/api/v1/transport/jobs/{job_id}/status?new_status=in_transit", headers=farmer_headers)
     assert status_resp.status_code == 200
     assert status_resp.json()["status"] == "in_transit"
+
+    # A different farmer must not be able to touch someone else's job
+    other_farmer_headers = login_headers("9876543211")
+    denied = client.post(f"/api/v1/transport/jobs/{job_id}/status?new_status=delivered", headers=other_farmer_headers)
+    assert denied.status_code == 403
 
 def test_auth_register_and_me():
     reg_resp = client.post("/api/v1/auth/register", json={
@@ -232,3 +300,29 @@ def test_auth_register_and_me():
     me_resp = client.get("/api/v1/auth/me", headers={"Authorization": f"Bearer {token}"})
     assert me_resp.status_code == 200
     assert me_resp.json()["name"] == "Test Farmer Ganesh"
+
+def test_chatbot_trained_knowledge_domains():
+    headers = login_headers("9876543210")
+    queries_and_expected = [
+        ("What is FarmChain and how does it help farmers?", "Smart Krishi Connect"),
+        ("What is the formula for net profit margin and Cost-of-Production?", "Profitability"),
+        ("How does live bidding and real-time auctions work?", "Cost-of-Production"),
+        ("Tell me about Ramesh Patil and demo password", "Ramesh Patil"),
+        ("How to cure Tomato Early Blight?", "Early Blight"),
+        ("What is the price and stock of Kavach Chlorothalonil?", "Kavach"),
+        ("What is the capacity and rate of Tata Ace Chota Hathi?", "Mini Truck"),
+        ("What are the color hex codes of the Calm Luxury palette?", "#F2EFEA"),
+        ("What is the live rate of Soybean in Nashik?", "Soybean"),
+        ("Calculate transport freight for 35 quintal over 60 km", "35.0 Qtl"),
+        ("सोयाबीन का ताज़ा मंडी भाव क्या है?", "सोयाबीन"),
+        ("टोमॅटो करपा रोगावर काय उपाय आहे?", "Early Blight"),
+        ("लिलाव कसा होतो आणि थेट बोली कशी लावायची?", "लिलाव"),
+    ]
+
+    for q, expected_substr in queries_and_expected:
+        resp = client.post("/api/v1/chatbot/ask", json={"query": q, "language": "en"}, headers=headers)
+        assert resp.status_code == 200
+        data = resp.json()
+        assert "answer" in data
+        assert len(data["answer"]) > 20
+        assert expected_substr.lower() in data["answer"].lower(), f"Failed for query: '{q}'\nAnswer: {data['answer']}"

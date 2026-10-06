@@ -59,139 +59,139 @@ export const FarmerOverview: React.FC<FarmerOverviewProps> = ({ onNavigate }) =>
   const totalBidsCount = listings.reduce((acc, l) => acc + (l.total_bids_count || 0), 0);
 
   return (
-    <div className="space-y-7 animate-in fade-in duration-300">
-      {/* Welcome Banner with Dynamic Mesh Gradient */}
-      <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 glass-card border border-emerald-500/30 shadow-2xl group">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-emerald-500/20 via-amber-500/10 to-transparent rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-700" />
+    <div className="space-y-12 animate-in fade-in duration-300">
+      {/* Welcome Banner with Calm Luxury Mesh Gradient - MEGA ENLARGED */}
+      <div className="relative overflow-hidden rounded-[3rem] p-12 sm:p-16 lg:p-20 glass-card border border-[#557373]/25 shadow-xl group bg-white">
+        <div className="absolute top-0 right-0 w-[48rem] h-[48rem] bg-gradient-to-bl from-[#dfe5f3] via-[#557373]/10 to-transparent rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-700" />
         
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5 bg-emerald-500/15 px-2.5 py-1 rounded-full border border-emerald-500/30">
-                <Sparkles className="w-3.5 h-3.5" />
-                Empowering Indian Agriculture
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-12">
+          <div className="space-y-5">
+            <div className="flex flex-wrap items-center gap-4">
+              <span className="text-base font-extrabold uppercase tracking-wider text-[#557373] flex items-center gap-2.5 bg-[#dfe5f3] px-5 py-2.5 rounded-full border border-[#557373]/25">
+                <Sparkles className="w-6 h-6" />
+                {t.farmer.welcome}
               </span>
-              <span className="text-[10px] font-black px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30 flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3" />
-                0% Middleman Cut · 100% Direct APMC
+              <span className="text-base font-black px-5 py-2.5 rounded-full bg-[#272401]/10 text-[#272401] border border-[#272401]/20 flex items-center gap-2.5">
+                <ShieldCheck className="w-5 h-5" />
+                {t.gateway.zeroMiddlemanBadge}
               </span>
             </div>
             
-            <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-gradient-agro">
-              Welcome, {user?.name || 'Farmer'} 🌾
+            <h1 className="text-5xl sm:text-7xl font-black tracking-tight text-gradient-agro leading-[0.95]">
+              {t.farmer.welcome}, {user?.name || t.roles.farmer} 🌾
             </h1>
             
-            <p className="text-xs sm:text-sm opacity-80 max-w-2xl leading-relaxed">
-              Connect directly with verified wholesale merchants, lock in guaranteed profit-protected bids, calculate real-time net mandi returns, and diagnose crop health with AI vision.
+            <p className="text-lg sm:text-xl text-[#64748b] max-w-3xl leading-relaxed">
+              {t.farmer.welcomeDesc}
             </p>
           </div>
 
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-emerald-950/60 transition-all hover:scale-105 active:scale-95 shrink-0"
+            className="flex items-center justify-center gap-4 px-12 py-6 rounded-3xl bg-[#557373] hover:bg-[#435c5c] text-white font-black text-lg sm:text-xl shadow-xl shadow-[#557373]/30 transition-all hover:scale-105 active:scale-95 shrink-0"
           >
-            <Plus className="w-4 h-4 stroke-[3]" />
+            <Plus className="w-7 h-7 stroke-[3]" />
             <span>{t.farmer.createListing}</span>
           </button>
         </div>
       </div>
 
-      {/* KPI Stats Grid with Rich Color Accents */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Stat 1: Active Listings */}
-        <div className="glass-card glass-card-hover rounded-3xl p-4 sm:p-5 space-y-2 relative overflow-hidden">
+      {/* KPI Stats Grid with Calm Luxury Accents - MEGA ENLARGED CHARTS */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
+        {/* Stat 1: Active Listings - MEGA ENLARGED */}
+        <div className="glass-card glass-card-hover rounded-[3rem] p-10 sm:p-12 space-y-6 relative overflow-hidden bg-white border border-[#557373]/20 shadow-lg">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold opacity-75">
+            <span className="text-lg font-bold text-[#64748b]">
               {t.farmer.activeListings}
             </span>
-            <div className="w-9 h-9 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
-              <Sprout className="w-4 h-4" />
+            <div className="w-20 h-20 rounded-3xl bg-[#dfe5f3] border border-[#557373]/30 flex items-center justify-center text-[#557373] shadow-sm">
+              <Sprout className="w-10 h-10" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-black">
+          <div className="text-6xl sm:text-7xl font-black text-[#0d0d0d] tracking-tight">
             {listings.length}
           </div>
-          <div className="text-[11px] font-bold text-emerald-400 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Across 5 Agri commodities</span>
+          <div className="text-base font-bold text-[#557373] flex items-center gap-2.5">
+            <span className="w-3 h-3 rounded-full bg-[#557373] animate-pulse" />
+            <span>{t.farmer.recentListings}</span>
           </div>
         </div>
 
-        {/* Stat 2: Live Bids */}
-        <div className="glass-card glass-card-hover rounded-3xl p-4 sm:p-5 space-y-2 relative overflow-hidden">
+        {/* Stat 2: Live Bids - MEGA ENLARGED */}
+        <div className="glass-card glass-card-hover rounded-[3rem] p-10 sm:p-12 space-y-6 relative overflow-hidden bg-white border border-[#557373]/20 shadow-lg">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold opacity-75">
+            <span className="text-lg font-bold text-[#64748b]">
               {t.farmer.liveBidsCount}
             </span>
-            <div className="w-9 h-9 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
-              <Gavel className="w-4 h-4" />
+            <div className="w-20 h-20 rounded-3xl bg-[#272401]/10 border border-[#272401]/25 flex items-center justify-center text-[#272401] shadow-sm">
+              <Gavel className="w-10 h-10" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-black">
+          <div className="text-6xl sm:text-7xl font-black text-[#0d0d0d] tracking-tight">
             {totalBidsCount}
           </div>
-          <div className="text-[11px] font-bold text-amber-400 flex items-center gap-1">
-            <Flame className="w-3.5 h-3.5" />
-            <span>From certified APMC buyers</span>
+          <div className="text-base font-bold text-[#272401] flex items-center gap-2.5">
+            <Flame className="w-6 h-6" />
+            <span>{t.biddingRoom.leadingBuyer}</span>
           </div>
         </div>
 
-        {/* Stat 3: Pipeline GMV */}
-        <div className="glass-card glass-card-hover rounded-3xl p-4 sm:p-5 space-y-2 relative overflow-hidden">
+        {/* Stat 3: Pipeline GMV - MEGA ENLARGED */}
+        <div className="glass-card glass-card-hover rounded-[3rem] p-10 sm:p-12 space-y-6 relative overflow-hidden bg-white border border-[#557373]/20 shadow-lg">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold opacity-75">
-              Active Pipeline GMV
+            <span className="text-lg font-bold text-[#64748b]">
+              {t.farmer.totalRevenue}
             </span>
-            <div className="w-9 h-9 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
-              <DollarSign className="w-4 h-4" />
+            <div className="w-20 h-20 rounded-3xl bg-[#dfe5f3] border border-[#557373]/30 flex items-center justify-center text-[#557373] shadow-sm">
+              <DollarSign className="w-10 h-10" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-black">
+          <div className="text-5xl sm:text-6xl font-black text-[#0d0d0d] tracking-tight">
             ₹{totalSalesEstimate.toLocaleString('en-IN')}
           </div>
-          <div className="text-[11px] font-bold text-cyan-400">
-            Projected total realization
+          <div className="text-base font-bold text-[#557373]">
+            {t.farmer.expectedEarnings}
           </div>
         </div>
 
-        {/* Stat 4: Best Mandi Alert */}
-        <div className="glass-card glass-card-hover rounded-3xl p-4 sm:p-5 space-y-2 relative overflow-hidden">
+        {/* Stat 4: Best Mandi Alert - MEGA ENLARGED */}
+        <div className="glass-card glass-card-hover rounded-[3rem] p-10 sm:p-12 space-y-6 relative overflow-hidden bg-white border border-[#557373]/20 shadow-lg">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold opacity-75">
-              Best Mandi Alert
+            <span className="text-lg font-bold text-[#64748b]">
+              {t.farmer.bestMandiAlert}
             </span>
-            <div className="w-9 h-9 rounded-2xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400">
-              <TrendingUp className="w-4 h-4" />
+            <div className="w-20 h-20 rounded-3xl bg-[#272401]/10 border border-[#272401]/25 flex items-center justify-center text-[#272401] shadow-sm">
+              <TrendingUp className="w-10 h-10" />
             </div>
           </div>
-          <div className="text-lg sm:text-xl font-black text-purple-300 truncate">
+          <div className="text-3xl sm:text-4xl font-black text-[#0d0d0d] truncate leading-tight">
             {mandiFeed?.best_mandi?.mandi_name || 'Pune APMC'}
           </div>
-          <div className="text-[11px] font-extrabold text-purple-400">
-            ₹{mandiFeed?.best_mandi?.modal_price || 5380}/Qtl Net Realized
+          <div className="text-base font-extrabold text-[#557373]">
+            ₹{mandiFeed?.best_mandi?.modal_price || 5380}/Qtl {t.mandi.netRealizedProfit}
           </div>
         </div>
       </div>
 
-      {/* Quick Access Feature Cards with Distinct Color Tones */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Quick Access Feature Cards - MEGA ENLARGED */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* Mandi Intelligence card */}
         <div
           onClick={() => onNavigate('mandi-intelligence')}
-          className="glass-card glass-card-hover rounded-3xl p-5 cursor-pointer space-y-3 relative overflow-hidden group"
+          className="glass-card glass-card-hover rounded-[3rem] p-10 sm:p-14 cursor-pointer space-y-8 relative overflow-hidden group bg-white border border-[#557373]/20 shadow-md hover:shadow-xl"
         >
           <div className="flex items-center justify-between">
-            <div className="w-11 h-11 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
-              <TrendingUp className="w-5 h-5" />
+            <div className="w-24 h-24 rounded-[2rem] bg-[#dfe5f3] border border-[#557373]/30 flex items-center justify-center text-[#557373] group-hover:scale-110 transition-transform shadow-sm">
+              <TrendingUp className="w-11 h-11" />
             </div>
-            <ArrowRight className="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-emerald-400" />
+            <ArrowRight className="w-7 h-7 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-[#557373]" />
           </div>
           <div>
-            <h4 className="font-extrabold text-sm text-gradient-agro">
+            <h4 className="font-extrabold text-2xl sm:text-3xl text-[#0d0d0d]">
               {t.nav.mandiIntelligence}
             </h4>
-            <p className="text-xs opacity-75 mt-1 leading-relaxed">
-              Compare prices net of transport across 10+ APMCs to maximize your profit.
+            <p className="text-lg text-[#64748b] mt-4 leading-relaxed">
+              {t.mandi.compareMandiRates}
             </p>
           </div>
         </div>
@@ -199,20 +199,20 @@ export const FarmerOverview: React.FC<FarmerOverviewProps> = ({ onNavigate }) =>
         {/* AI Plant Doctor card */}
         <div
           onClick={() => onNavigate('plant-doctor')}
-          className="glass-card glass-card-hover rounded-3xl p-5 cursor-pointer space-y-3 relative overflow-hidden group"
+          className="glass-card glass-card-hover rounded-[3rem] p-10 sm:p-14 cursor-pointer space-y-8 relative overflow-hidden group bg-white border border-[#557373]/20 shadow-md hover:shadow-xl"
         >
           <div className="flex items-center justify-between">
-            <div className="w-11 h-11 rounded-2xl bg-violet-500/20 border border-violet-500/40 flex items-center justify-center text-violet-400 group-hover:scale-110 transition-transform">
-              <Stethoscope className="w-5 h-5" />
+            <div className="w-24 h-24 rounded-[2rem] bg-[#dfe5f3] border border-[#557373]/30 flex items-center justify-center text-[#557373] group-hover:scale-110 transition-transform shadow-sm">
+              <Stethoscope className="w-11 h-11" />
             </div>
-            <ArrowRight className="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-violet-400" />
+            <ArrowRight className="w-7 h-7 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-[#557373]" />
           </div>
           <div>
-            <h4 className="font-extrabold text-sm text-violet-300">
+            <h4 className="font-extrabold text-2xl sm:text-3xl text-[#0d0d0d]">
               {t.nav.plantDoctor} (AI Vision)
             </h4>
-            <p className="text-xs opacity-75 mt-1 leading-relaxed">
-              Upload leaf photos for 98% accurate disease detection & instant spray remedies.
+            <p className="text-lg text-[#64748b] mt-4 leading-relaxed">
+              {t.disease.uploadPrompt}
             </p>
           </div>
         </div>
@@ -220,81 +220,81 @@ export const FarmerOverview: React.FC<FarmerOverviewProps> = ({ onNavigate }) =>
         {/* Pesticides & Inputs Store card */}
         <div
           onClick={() => onNavigate('pesticide-store')}
-          className="glass-card glass-card-hover rounded-3xl p-5 cursor-pointer space-y-3 relative overflow-hidden group"
+          className="glass-card glass-card-hover rounded-[3rem] p-10 sm:p-14 cursor-pointer space-y-8 relative overflow-hidden group bg-white border border-[#557373]/20 shadow-md hover:shadow-xl"
         >
           <div className="flex items-center justify-between">
-            <div className="w-11 h-11 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
-              <ShoppingBag className="w-5 h-5" />
+            <div className="w-24 h-24 rounded-[2rem] bg-[#272401]/10 border border-[#272401]/25 flex items-center justify-center text-[#272401] group-hover:scale-110 transition-transform shadow-sm">
+              <ShoppingBag className="w-11 h-11" />
             </div>
-            <ArrowRight className="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-amber-400" />
+            <ArrowRight className="w-7 h-7 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-[#272401]" />
           </div>
           <div>
-            <h4 className="font-extrabold text-sm text-gradient-gold">
+            <h4 className="font-extrabold text-2xl sm:text-3xl text-[#0d0d0d]">
               {t.nav.pesticideStore}
             </h4>
-            <p className="text-xs opacity-75 mt-1 leading-relaxed">
-              Order verified bio-fungicides, certified seeds & pure organic inputs.
+            <p className="text-lg text-[#64748b] mt-4 leading-relaxed">
+              {t.pesticides.subtitle}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Active Listings in Live Bidding Window */}
-      <div className="glass-card rounded-3xl p-6 space-y-4">
-        <div className="flex items-center justify-between flex-wrap gap-2">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
-              <Gavel className="w-4 h-4" />
+      {/* Active Listings in Live Bidding Window - MEGA ENLARGED */}
+      <div className="glass-card rounded-[3rem] p-10 sm:p-12 lg:p-14 space-y-10 bg-white border border-[#557373]/20 shadow-md">
+        <div className="flex items-center justify-between flex-wrap gap-5">
+          <div className="flex items-center gap-5">
+            <div className="w-16 h-16 rounded-3xl bg-[#dfe5f3] border border-[#557373]/30 flex items-center justify-center text-[#557373] shadow-sm">
+              <Gavel className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="font-extrabold text-base">
-                Active Produce in Live Bidding Window
+              <h3 className="font-extrabold text-2xl sm:text-3xl text-[#0d0d0d]">
+                {t.farmer.enterBiddingRoom}
               </h3>
-              <p className="text-[11px] opacity-75">
-                Real-time merchant offers with automatic cost-of-production profit protection
+              <p className="text-base sm:text-lg text-[#64748b]">
+                {t.farmer.copWarning}
               </p>
             </div>
           </div>
           <button
             onClick={() => onNavigate('my-listings')}
-            className="text-xs text-emerald-400 hover:underline font-bold flex items-center gap-1"
+            className="text-lg text-[#557373] hover:underline font-bold flex items-center gap-2.5 px-5 py-2.5 rounded-full hover:bg-[#dfe5f3]/50 transition-colors"
           >
-            <span>View All ({listings.length})</span>
-            <ChevronRight className="w-3.5 h-3.5" />
+            <span>{t.common.viewAll} ({listings.length})</span>
+            <ChevronRight className="w-6 h-6" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {listings.slice(0, 2).map((l) => {
             const topBid = l.bids && l.bids.length > 0 ? l.bids[0] : null;
             return (
               <div
                 key={l.id}
                 onClick={() => onNavigate('bidding-room', l.id)}
-                className="p-4 rounded-2xl glass-card glass-card-hover cursor-pointer transition-all flex items-center justify-between gap-4"
+                className="p-10 rounded-[2.5rem] glass-card glass-card-hover cursor-pointer transition-all flex items-center justify-between gap-8 bg-white border border-[#557373]/20 shadow-sm hover:shadow-lg"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-6">
                   <img
                     src={l.image_url}
                     alt={l.crop_name}
-                    className="w-16 h-16 rounded-2xl object-cover border border-emerald-500/30"
+                    className="w-32 h-32 sm:w-40 sm:h-40 rounded-[2rem] object-cover border border-[#557373]/30 shadow-sm"
                   />
-                  <div className="space-y-0.5">
-                    <h4 className="font-black text-sm">
+                  <div className="space-y-2.5">
+                    <h4 className="font-black text-xl sm:text-2xl text-[#0d0d0d]">
                       {l.crop_name} ({l.quantity_quintals} Qtl)
                     </h4>
-                    <p className="text-xs opacity-75">{l.variety} · {l.quality_grade}</p>
-                    <div className="flex items-center gap-1.5 pt-0.5">
-                      <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                        {l.total_bids_count} active bids
+                    <p className="text-lg text-[#64748b]">{l.variety} · {l.quality_grade}</p>
+                    <div className="flex items-center gap-2.5 pt-1">
+                      <span className="text-base font-extrabold px-4 py-2 rounded-full bg-[#dfe5f3] text-[#557373] border border-[#557373]/30">
+                        {l.total_bids_count} {t.farmer.liveBidsCount}
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="text-right space-y-1">
-                  <div className="text-[11px] opacity-75 font-semibold">Leading Bid</div>
-                  <div className="text-lg font-black text-emerald-400">
+                <div className="text-right space-y-2.5 shrink-0">
+                  <div className="text-base text-[#64748b] font-semibold">{t.biddingRoom.currentTopBid}</div>
+                  <div className="text-3xl sm:text-4xl font-black text-[#557373]">
                     ₹{topBid ? topBid.amount_per_quintal.toLocaleString('en-IN') : l.base_price}/Qtl
                   </div>
                   {topBid && (

@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from datetime import datetime, timedelta, timezone
 from backend.app.core.database import get_db
-from backend.app.api.v1.auth import get_current_user
+from backend.app.api.v1.auth import get_current_user, require_roles
 from backend.app.models.user import User
 from backend.app.models.listing import CropListing
 from backend.app.models.bid import Bid
@@ -16,10 +16,19 @@ router = APIRouter()
 def format_listing_out(listing: CropListing, db: Session) -> CropListingOut:
     bids = db.query(Bid).filter(Bid.listing_id == listing.id).order_by(Bid.amount_per_quintal.desc()).all()
     highest_bid = bids[0].amount_per_quintal if bids else None
-    
+
+    # Batch-load merchants in a single query instead of one per bid
+    merchant_ids = {b.merchant_id for b in bids}
+    merchants = {}
+    if merchant_ids:
+        merchants = {
+            m.id: m
+            for m in db.query(User).filter(User.id.in_(merchant_ids)).all()
+        }
+
     bids_out = []
     for b in bids:
-        merchant = db.query(User).filter(User.id == b.merchant_id).first()
+        merchant = merchants.get(b.merchant_id)
         bids_out.append(BidOut(
             id=b.id,
             listing_id=b.listing_id,
@@ -89,7 +98,7 @@ def get_listing_by_id(listing_id: int, db: Session = Depends(get_db)):
 @router.post("/", response_model=CropListingOut)
 def create_listing(
     listing_in: CropListingCreate,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_roles("farmer")),
     db: Session = Depends(get_db)
 ):
     now = datetime.now(timezone.utc)
