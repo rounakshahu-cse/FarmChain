@@ -1,3 +1,13 @@
+# Logs & runtime output
+*.log
+npm-debug.log*
+yarn-error.log*
+nohup.out
+
+# Build artifacts / binaries
+*.exe
+*.out
+
 # Python & Virtual Environments
 venv/
 .venv/
