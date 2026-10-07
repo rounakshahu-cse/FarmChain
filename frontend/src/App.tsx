@@ -150,19 +150,19 @@ const AppContent: React.FC = () => {
         Skip to main content
       </a>
 
-      {/* Background Ambient Glow Lights - mega enlarged for massive canvas */}
-      <div className="pointer-events-none fixed -top-32 -left-32 w-[48rem] h-[48rem] bg-[#557373]/10 rounded-full blur-3xl -z-10 animate-float" />
-      <div className="pointer-events-none fixed top-1/3 -right-32 w-[48rem] h-[48rem] bg-[#dfe5f3]/60 rounded-full blur-3xl -z-10 animate-float" style={{ animationDelay: '-2s' }} />
-      <div className="pointer-events-none fixed -bottom-32 left-1/4 w-[42rem] h-[42rem] bg-[#272401]/5 rounded-full blur-3xl -z-10" />
+      {/* Background Ambient Glow Lights */}
+      <div className="pointer-events-none fixed -top-32 -left-32 w-[32rem] h-[32rem] bg-[#557373]/10 rounded-full blur-3xl -z-10 animate-float" />
+      <div className="pointer-events-none fixed top-1/3 -right-32 w-[32rem] h-[32rem] bg-[#dfe5f3]/60 rounded-full blur-3xl -z-10 animate-float" style={{ animationDelay: '-2s' }} />
+      <div className="pointer-events-none fixed -bottom-32 left-1/4 w-[28rem] h-[28rem] bg-[#272401]/5 rounded-full blur-3xl -z-10" />
 
       {/* Top Navigation Bar */}
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      {/* Main Layout Container - mega widened for massive dashboard charts */}
-      <div className="flex-1 max-w-[100rem] w-full mx-auto flex z-10">
+      {/* Main Layout Container */}
+      <div className="flex-1 max-w-[88rem] w-full mx-auto flex z-10">
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        <main id="main-content" className="flex-1 p-10 sm:p-12 lg:p-14 overflow-y-auto max-w-full">
+        <main id="main-content" className="flex-1 p-5 sm:p-6 lg:p-8 overflow-y-auto max-w-full">
           {renderActiveView()}
         </main>
       </div>
